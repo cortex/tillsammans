@@ -1,0 +1,72 @@
+#:kivy 1.0
+#:import sla kivy.adapters.simplelistadapter
+#:import label kivy.uix.label
+
+<Controller>:
+    tasks: task_list
+    users: users
+    canvas.before:
+        Color:
+            rgba: (1,1,1,0.4)
+        Rectangle:
+            # self here refers to the widget i.e BoxLayout
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+
+        BoxLayout:
+            id: users
+            orientation: 'horizontal'
+            size_hint: 1, 0.5
+
+        ListView:
+            id: task_list
+            #size_hint: .8,.8
+            size: "100%", 800
+            font_size: root.size[0]/6.0
+
+            adapter:
+                sla.SimpleListAdapter(
+                data=[],
+                cls=label.Label)
+            on_adapter: self.adapter.bind_triggers_to_view(self._trigger_reset_populate)
+        Button:
+            size_hint: 1, 0.2
+            text: 'GJORT'
+            on_press: root.check_in()
+
+
+<User>:
+    layout: layout
+    avatar: avatar
+    BoxLayout:
+        id: layout
+        orientation: 'vertical'
+        padding: 20
+        bgcolor: (1,1,1,0.4)
+
+        canvas.before:
+            Color:
+                rgba: self.bgcolor
+            Rectangle:
+                # self here refers to the widget i.e BoxLayout
+                pos: self.pos
+                size: self.size
+        AsyncImage:
+            id: avatar
+            size_hint: 1.0, 2.8
+        Label:
+            id: name_label
+            text: root.name
+
+        Label:
+            id: score_label
+            text: str(root.score)
+            font_size: root.size[0]/6.0
+            color: (0.9, 0.8, 0.0, 1)
+
+<CheckinTask>
+    BoxLayout:
+    Button:

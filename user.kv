@@ -1,0 +1,17 @@
+#:kivy 1.0
+#:import label kivy.uix.label
+<User>:
+    name:   name
+    score: score
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+
+        Label:
+            id: name
+            text: "user"
+        Label:
+            id: score
+            text: "test"
+            size: "60sp"
